@@ -157,7 +157,7 @@ registerUser = async (req, res) => {
                 lastName: savedUser.lastName,  
                 email: savedUser.email              
             }
-        })
+        }).send();
 
         console.log("token sent");
 

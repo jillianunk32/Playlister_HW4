@@ -38,7 +38,7 @@ body {
   left: 0%;
 }
 
-#top5-banner {
+#playlister-banner {
   position: absolute;
   left: 0%;
   top: 0%;
@@ -74,8 +74,8 @@ body {
   float: right;
 }
 
-.top5-button,
-.top5-button-disabled {
+.playlist-button,
+.playlist-button-disabled {
   font-size: 36pt;
   border-width: 0px;
   float: left;
@@ -84,17 +84,17 @@ body {
   opacity: 100%;
 }
 
-.top5-button:hover {
+.playlist-button:hover {
   cursor: pointer;
   color: black;
 }
 
-.top5-button-disabled {
+.playlist-button-disabled {
   opacity: 0.25;
   cursor: not-allowed;
 }
 
-#top5-list-selector {
+#playlist-selector {
   position: absolute;
   left: 0%;
   top: 10%;
@@ -103,7 +103,7 @@ body {
   background-color: var(--swatch-primary);
 }
 
-#top5-workspace {
+#playlist-workspace {
   position: absolute;
   left: 0%;
   top: 10%;
@@ -112,7 +112,7 @@ body {
   background-color: var(--swatch-accent);
 }
 
-#top5-statusbar {
+#playlist-statusbar {
   position: absolute;
   left: 0%;
   top: 90%;
@@ -125,7 +125,7 @@ body {
   font-size: 36pt;
 }
 
-#list-selector-heading {
+#playlist-selector-heading {
   position: absolute;
   left: 0%;
   top: 0%;
