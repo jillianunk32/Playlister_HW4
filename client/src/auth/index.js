@@ -1,3 +1,4 @@
+
 import React, { createContext, useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import api from './auth-request-api'
@@ -16,13 +17,14 @@ export const AuthActionType = {
 function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
-        loggedIn: false
+        loggedIn: false,
+        errorMessage: ""
     });
     const history = useHistory();
 
     useEffect(() => {
         auth.getLoggedIn();
-    }, []);
+    }, [auth.errorMessage]);
 
     const authReducer = (action) => {
         const { type, payload } = action;
@@ -30,13 +32,15 @@ function AuthContextProvider(props) {
             case AuthActionType.GET_LOGGED_IN: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: payload.loggedIn
+                    loggedIn: payload.loggedIn,
+                    errorMessage: payload.errorMessage
                 });
             }
             case AuthActionType.LOGIN_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: payload.errorMessage
                 })
             }
             case AuthActionType.LOGOUT_USER: {
@@ -48,7 +52,8 @@ function AuthContextProvider(props) {
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: payload.errorMessage
                 })
             }
             default:
@@ -57,33 +62,58 @@ function AuthContextProvider(props) {
     }
 
     auth.getLoggedIn = async function () {
+        try{
         const response = await api.getLoggedIn();
         if (response.status === 200) {
             authReducer({
                 type: AuthActionType.SET_LOGGED_IN,
                 payload: {
                     loggedIn: response.data.loggedIn,
-                    user: response.data.user
+                    user: response.data.user,
+                    errorMessage: auth.errorMessage
                 }
             });
         }
+    }catch{
+        authReducer({
+            type: AuthActionType.GET_LOGGED_IN,
+            payload:{
+                loggedIn: false,
+                user: null,
+                errorMessage: auth.errorMessage
+            }
+        })
+    }
     }
 
     auth.registerUser = async function(firstName, lastName, email, password, passwordVerify, store) {
+        try{
         const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);      
         if (response.status === 200) {
             authReducer({
                 type: AuthActionType.REGISTER_USER,
                 payload: {
-                    user: response.data.user
+                    user: response.data.user,
+                    errorMessage: ""
                 }
             })
             history.push("/");
             store.loadIdNamePairs();
         }
+    }catch(response){
+        authReducer({
+            type: AuthActionType.GET_LOGGED_IN,
+            payload:{
+                loggedIn: false,
+                user: null,
+                errorMessage: response.response.data.errorMessage
+            }
+        })
+    }
     }
 
     auth.loginUser = async function(email, password) {
+        try{
         const response = await api.loginUser(email, password);
         if (response.status === 200) {
             authReducer({
@@ -94,6 +124,16 @@ function AuthContextProvider(props) {
             })
             history.push("/");
         }
+    }catch(response){
+        authReducer({
+            type: AuthActionType.GET_LOGGED_IN,
+            payload:{
+                loggedIn: false,
+                user: null,
+                errorMessage: response.response.data.errorMessage
+            }
+        })
+    }
     }
 
     auth.logoutUser = async function() {
@@ -115,6 +155,24 @@ function AuthContextProvider(props) {
         }
         console.log("user initials: " + initials);
         return initials;
+    }
+
+    auth.unmarkError = function(){
+        authReducer({
+            type: AuthActionType.GET_LOGGED_IN,
+            payload: {
+                loggedIn: false,
+                user: null,
+                errorMessage: ""
+            }
+        });
+    }
+
+    auth.hasErrorMessage = function (){
+        if(auth.errorMessage){
+            return true;
+        }
+        return false;
     }
 
     return (
