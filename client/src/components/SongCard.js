@@ -35,6 +35,7 @@ function SongCard(props) {
     }
     function handleRemoveSong(event) {
         store.showRemoveSongModal(index, song);
+        console.log("in handleremovesong");
     }
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING

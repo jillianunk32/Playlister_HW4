@@ -362,6 +362,7 @@ function GlobalStoreContextProvider(props) {
         });        
     }
     store.showRemoveSongModal = (songIndex, songToRemove) => {
+        console.log("in showremovesongmodal");
         storeReducer({
             type: GlobalStoreActionType.REMOVE_SONG,
             payload: {currentSongIndex: songIndex, currentSong: songToRemove}
@@ -380,6 +381,7 @@ function GlobalStoreContextProvider(props) {
         return store.currentModal === CurrentModal.EDIT_SONG;
     }
     store.isRemoveSongModalOpen = () => {
+        console.log("isremovesongmodalopen")
         return store.currentModal === CurrentModal.REMOVE_SONG;
     }
 

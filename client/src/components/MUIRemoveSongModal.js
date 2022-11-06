@@ -3,6 +3,7 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { DialogContent } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -27,10 +28,11 @@ export default function MUIRemoveSongModal() {
         store.hideModals();
     }
     
-    let modalClass = "modal";
-    if (store.isRemoveSongModalOpen()) {
-        modalClass += " is-visible";
-    }
+    // let modalClass = "modal-dialog";
+    // if (store.isRemoveSongModalOpen()) {
+    //     modalClass += " is-visible";
+    //     console.log("is visible");
+    // }
     let songTitle = "";
     if (store.currentSong) {
         songTitle = store.currentSong.title;
@@ -38,37 +40,27 @@ export default function MUIRemoveSongModal() {
 
     return (
         <Modal
-            open={store.listMarkedForDeletion !== null}
+            open={store.isRemoveSongModalOpen()}
         >
             <Box sx={style}>
-            <div
-        id="remove-song-modal"
-        className={modalClass}
-        data-animation="slideInOutLeft">
-        <div className="modal-root" id='verify-remove-song-root'>
-            <div className="modal-north">
-                Remove {songTitle}?
-            </div>
-            <div className="modal-center">
-                <div className="modal-center-content">
-                    Are you sure you wish to permanently remove {songTitle} from the playlist?
+                <div className="modal-dialog">
+                <header className="dialog-header">
+                    Remove {songTitle}?
+                </header>
+                <DialogContent>Are you sure you want to remove {songTitle} from the playlist?</DialogContent>
+                <div id="confirm-cancel-container">
+                    <button
+                        id="dialog-yes-button"
+                        className="modal-button"
+                        onClick={handleConfirmRemoveSong}
+                    >Confirm</button>
+                    <button
+                        id="dialog-no-button"
+                        className="modal-button"
+                        onClick={handleCancelRemoveSong}
+                    >Cancel</button>
                 </div>
             </div>
-            <div className="modal-south">
-                <input type="button" 
-                    id="remove-song-confirm-button" 
-                    className="modal-button" 
-                    onClick={handleConfirmRemoveSong} 
-                    value='Confirm' />
-                <input 
-                    type="button" 
-                    id="remove-song-cancel-button" 
-                    className="modal-button" 
-                    onClick={handleCancelRemoveSong} 
-                    value='Cancel' />
-            </div>
-        </div>
-    </div>
             </Box>
         </Modal>
     );
