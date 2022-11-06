@@ -3,7 +3,7 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { DialogContent, Input, Typography } from '@mui/material';
+import { Input} from '@mui/material';
 
 const style = {
     position: 'absolute',
