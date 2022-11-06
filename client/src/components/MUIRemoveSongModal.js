@@ -28,11 +28,6 @@ export default function MUIRemoveSongModal() {
         store.hideModals();
     }
     
-    // let modalClass = "modal-dialog";
-    // if (store.isRemoveSongModalOpen()) {
-    //     modalClass += " is-visible";
-    //     console.log("is visible");
-    // }
     let songTitle = "";
     if (store.currentSong) {
         songTitle = store.currentSong.title;
