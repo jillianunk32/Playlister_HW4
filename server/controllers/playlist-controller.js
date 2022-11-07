@@ -25,7 +25,7 @@ createPlaylist = (req, res) => {
     }
 
     User.findOne({ _id: req.userId }, (err, user) => {
-        if(user._id == req.userId){ // this should always be true since we are getting from req
+        if(user.email == playlist.ownerEmail){
             console.log("user found: " + JSON.stringify(user));
             user.playlists.push(playlist._id);
             user
