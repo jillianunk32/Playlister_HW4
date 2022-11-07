@@ -25,26 +25,32 @@ createPlaylist = (req, res) => {
     }
 
     User.findOne({ _id: req.userId }, (err, user) => {
-        if(user._id == req.userId){
-        console.log("user found: " + JSON.stringify(user));
-        user.playlists.push(playlist._id);
-        user
-            .save()
-            .then(() => {
-                playlist
-                    .save()
-                    .then(() => {
-                        return res.status(201).json({
-                            playlist: playlist
+        if(user._id == req.userId){ // this should always be true since we are getting from req
+            console.log("user found: " + JSON.stringify(user));
+            user.playlists.push(playlist._id);
+            user
+                .save()
+                .then(() => {
+                    playlist
+                        .save()
+                        .then(() => {
+                            return res.status(201).json({
+                                playlist: playlist
+                            })
                         })
-                    })
-                    .catch(error => {
-                        return res.status(400).json({
-                            errorMessage: 'Playlist Not Created!'
+                        .catch(error => {
+                            return res.status(400).json({
+                                errorMessage: 'Playlist Not Created!'
+                            })
                         })
-                    })
-            });
-        }
+                });
+            }
+            else{
+                console.log("incorrect user!");
+                    return res.status(400).json({ 
+                        errorMessage: "authentication error" 
+                    });
+            }
     })
 }
 deletePlaylist = async (req, res) => {
