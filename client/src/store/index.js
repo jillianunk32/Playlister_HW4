@@ -277,6 +277,10 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
+        console.log(store.idNamePairs);
+        if(store.idNamePairs.length===0){
+            store.newListCounter = 0;
+        }
         let newListName = "Untitled" + store.newListCounter;
         const response = await api.createPlaylist(newListName, [], auth.user.email);
         console.log("createNewList response: " + response);
