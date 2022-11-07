@@ -277,7 +277,6 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
-        console.log(store.idNamePairs);
         if(store.idNamePairs.length===0){
             store.newListCounter = 0;
         }
