@@ -119,7 +119,8 @@ function AuthContextProvider(props) {
             authReducer({
                 type: AuthActionType.LOGIN_USER,
                 payload: {
-                    user: response.data.user
+                    user: response.data.user,
+                    errorMessage: ""
                 }
             })
             history.push("/");
