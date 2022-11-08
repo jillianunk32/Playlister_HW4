@@ -310,6 +310,7 @@ function GlobalStoreContextProvider(props) {
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: pairsArray
                 });
+                tps.clearAllTransactions();
             }
             else {
                 console.log("API FAILED TO GET THE LIST PAIRS");
