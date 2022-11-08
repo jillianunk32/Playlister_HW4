@@ -143,7 +143,7 @@ body {
   float: left;
 }
 
-#list-selector-list {
+#playlistlist-selector-list {
   position: absolute;
   left: 0%;
   top: 10%;
@@ -240,16 +240,16 @@ input {
   font-size: 20pt;
 }
 
-.top5-item,
-.top5-item-dragged-to {
+.song-card,
+.song-card-dragged-to {
   text-align: left;
   width: 95%;
   padding-left: 5%;
 }
-.top5-item {
+.song-card {
   background-color: var(--swatch-complement);
 }
-.top5-item-dragged-to {
+.song-card-dragged-to {
   background-color: var(--swatch-accent);
 }
 
